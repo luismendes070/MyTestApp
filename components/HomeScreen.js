@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Alert,Button, YellowBox, Text, View} from 'react-native';
+import {Alert,Button, YellowBox, Text, View, ScrollView, ListView} from 'react-native';
 
 //Details Screen
 //import {createAppContainer} from 'react-navigation';
@@ -7,7 +7,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 
 export class HomeScreen extends React.Component {
     static navigationOptions = {
-        title: 'Welcome',
+        title: 'Início Personagens',
     };
 
     constructor(props) {
@@ -37,6 +37,8 @@ export class HomeScreen extends React.Component {
 
     render() {
 
+        const {navigate} = this.props.navigation;
+
         YellowBox.ignoreWarnings(['Warning: ...']);
 
         if (this.state.isLoading) {
@@ -45,41 +47,49 @@ export class HomeScreen extends React.Component {
             );
         } else {
 
+            function Naves(props){
+                return <ListView>Naves2({props.starships})</ListView>;
+            }
+
+            function Naves2(props){
+                return <View>{props.return}</View>;
+            }
+
             let results = this.state.dataSource.map((val, key) => {
                     return <Text key={key}>
                         {val.name}
+                        Naves({val.starships})
+
                     </Text>
                 }
             );
 
             return (
-                <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                    <Text>Personagens Star Wars</Text>
-                    <View>{results}</View>
-                    <Button title="Ver naves" onPress={() => Alert.alert('Button pressed')}/>
-                </View>
+                    <ScrollView>
+                        {results}
+                        <Button title="VER NAVES" onPress={() => this.props.navigation.navigate('Details')}/>
+                    </ScrollView>
             );
 
-        }
 
-        const {navigate} = this.props.navigation;
-        return (
-            <Button
-                title="Ir para naves do personagem"
-                onPress={
-                //    () => navigate('Profile', {name: 'Jane'})
-                    () => this.props.navigation.navigate('Details')
-                }
-            />
-        );
+
+
+        }
     }
 }
 
 class DetailsScreen extends React.Component {
+
+    constructor(props){
+        super(props);
+        //this.state = props;
+    }
+
     render() {
         return (
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Text>Details Screen</Text>
+                <Button title="Inicio" onPress={() => this.props.navigation.navigate('Home')}/>
             </View>
         );
     }
