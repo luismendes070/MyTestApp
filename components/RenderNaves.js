@@ -1,51 +1,48 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
+import {NomeNave} from "./NomeNave";
 
-export class RenderNaves extends React.Component{
+export class RenderNaves extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         console.log('constructor RenderNaves');
-        console.log(props.starships);
+        console.log(this.props.starships);
 
-        console.log('rendering array ');
-        console.log(props.starships.indexOf());
-
-        for (let i = 0; i < props.starships.length; i++) {
-            try{
-                console.log(props.starships[i].name);
-            }catch (e) {
-                console.log('personagem sem naves');
-            }
-        }
     }
 
+    render() {
 
-    render(){
+        let Naves;
 
-        let aux;
+        if(this.props.starships !== undefined){
+            Naves = this.props.starships.map(
+                (key, val) => {
 
-        try{
-            for (let i = 0; i < this.props.starships.length; i++) {
-                aux = this.props.starships[i].name;
-            }
-        }catch(e){
-
+                    if(val === undefined){
+                        console.log('val undefined');
+                        return (
+                            <View key={key}>
+                            </View>
+                        );
+                    }else{
+                        console.log('val url 1 personagem');
+                        console.log(val);
+                        return (
+                            <View key={key}>
+                                <NomeNave urlNaves={val}/>
+                            </View>
+                        );
+                    }
+                }
+            );
         }
 
-        /*let a = this.props.starships.shift((key, val) => {
-                return(
-                    <View key={key}>{val.name}</View>
-                );
-            }
-        );*/
-
-        return(
-            <View>
-                <Text>Naves</Text>
-            </View>
+        return (
+            <ScrollView>
+                {Naves}
+            </ScrollView>
         );
     }
-
 }
