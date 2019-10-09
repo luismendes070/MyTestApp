@@ -1,5 +1,8 @@
-import React from 'react';
-import {Text, ScrollView, YellowBox} from 'react-native';
+import React, {Component} from 'react';
+import {YellowBox, Text, ScrollView, Button} from 'react-native';
+
+//import { createAppContainer } from 'react-navigation';
+//import { createStackNavigator } from 'react-navigation-stack';
 
 export class NomeNave extends React.Component {
 
@@ -17,6 +20,10 @@ export class NomeNave extends React.Component {
 
     }
 
+    static navigationOptions = {
+        title: 'Nome Nave',
+    };
+
     componentDidMount() {
 
         //let n = "https://swapi.co/api/starships/48";
@@ -24,7 +31,7 @@ export class NomeNave extends React.Component {
         if(this.props.urlNaves[0] === undefined){
             //Alert.alert("empty array of starships");
             console.log('starships array undefined :)');
-            return ;
+            //return ;
         }else {
 
             console.log('fetching starship 0');
@@ -47,7 +54,11 @@ export class NomeNave extends React.Component {
 
     render() {
 
-        let response = {
+        YellowBox.ignoreWarnings(['Warning: ...']);
+
+        const {navigate} = this.props.navigation;
+
+        /*let response = {
             "name": "Jedi starfighter",
             "model": "Delta-7 Aethersprite-class interceptor",
             "manufacturer": "Kuat Systems Engineering",
@@ -351,7 +362,7 @@ export class NomeNave extends React.Component {
                     "url": "https://swapi.co/api/people/10/"
                 }
             ]
-        };
+        };*/
 
         YellowBox.ignoreWarnings(['Warning: ...']);
 
@@ -365,9 +376,16 @@ export class NomeNave extends React.Component {
             console.log('Nome');
             console.log(Nome);
 
+            let vetor = this.props.starships;
+            let lista = vetor.map(vetor => <li>{vetor}</li>);//es6
+
             return (
                 <ScrollView>
-                    {Nome}
+                    <div>{response.name}</div>
+                    <ul>{lista}</ul>
+                    <Button title="Go to Início" onPress={
+                        () => this.props.navigation.navigate('Home')
+                    }></Button>
                 </ScrollView>
             );
         }

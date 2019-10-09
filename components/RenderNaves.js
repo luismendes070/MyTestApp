@@ -1,6 +1,11 @@
-import React from 'react';
-import {ScrollView, View} from 'react-native';
+//import React from 'react';
+//import {ScrollView, View} from 'react-native';
+import * as React from 'react';
+import {YellowBox, ScrollView, Button, View, Text} from 'react-native';
 import {NomeNave} from "./NomeNave";
+
+//import { createAppContainer } from 'react-navigation';
+//import { createStackNavigator } from 'react-navigation-stack';
 
 export class RenderNaves extends React.Component {
 
@@ -12,36 +17,39 @@ export class RenderNaves extends React.Component {
 
     }
 
+    static navigationOptions = {
+        title: 'Naves',
+    };
+
     render() {
+
+        YellowBox.ignoreWarnings(['Warning: ...']);
+
+        const {navigate} = this.props.navigation;
 
         let Naves;
 
         if(this.props.starships !== undefined){
             Naves = this.props.starships.map(
-                (key, val) => {
-
-                    if(val === undefined){
-                        console.log('val undefined');
-                        return (
-                            <View key={key}>
-                            </View>
-                        );
-                    }else{
+                (val, key) => {
                         console.log('val url 1 personagem');
                         console.log(val);
                         return (
                             <View key={key}>
-                                <NomeNave urlNaves={val}/>
+                                {/*<NomeNave urlNaves={val}/>*/}
                             </View>
                         );
-                    }
                 }
             );
         }
 
         return (
             <ScrollView>
-                {Naves}
+                <Text>Lista de Naves do personagem </Text>
+                <View>{Naves}</View>
+                <Button title="Go to Nome" onPress={
+                    () => this.props.navigation.navigate('Nome', {props: this.props})
+                }></Button>
             </ScrollView>
         );
     }

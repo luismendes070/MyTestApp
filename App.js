@@ -28,14 +28,14 @@ import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
 import {HomeScreen} from './components/HomeScreen';
-import {ProfileScreen} from './components/ProfileScreen';
+//import {ProfileScreen} from './components/ProfileScreen';
 
 import {RenderNaves} from './components/RenderNaves';
 import {NomeNave} from './components/NomeNave';
 
 const MainNavigator = createStackNavigator({
   Home: {screen: HomeScreen},
-  Profile: {screen: ProfileScreen},
+  //Profile: {screen: ProfileScreen},
   Naves: {screen: RenderNaves},
   Nome: {screen: NomeNave},
 });

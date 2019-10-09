@@ -1,6 +1,9 @@
 import React from 'react';
-import {YellowBox, Text, View, ScrollView, StyleSheet} from 'react-native';
-import {RenderNaves} from "./RenderNaves";
+import {YellowBox, Text, View, ScrollView, StyleSheet, Button} from 'react-native';
+//import {RenderNaves} from "./RenderNaves";
+
+//import { createAppContainer } from 'react-navigation';
+//import { createStackNavigator } from 'react-navigation-stack';
 
 export class HomeScreen extends React.Component {
 
@@ -11,6 +14,10 @@ export class HomeScreen extends React.Component {
             isLoading: true
         }
     }
+
+    static navigationOptions = {
+        title: 'Início Personagens',
+    };
 
     componentDidMount() {
 
@@ -35,13 +42,15 @@ export class HomeScreen extends React.Component {
 
         YellowBox.ignoreWarnings(['Warning: ...']);
 
+        const {navigate} = this.props.navigation;
+
         if (this.state.isLoading) {
             return (
                 <Text>Carregando Personagens Star Wars...</Text>
             );
         } else {
 
-            const people = {
+            /*const people = {
                 "count": 87,
                 "next": "https://swapi.co/api/people/?page=2",
                 "previous": null,
@@ -318,22 +327,31 @@ export class HomeScreen extends React.Component {
                         "url": "https://swapi.co/api/people/10/"
                     }
                 ]
-            };
+            };*/
 
                 let results = this.state.dataSource.map((val, key) => {
 
-                    let n = <Text></Text>;
+                    let n = <Text>Personagem não possui nenhuma nave.</Text>;
 
                     if(val.starships.length > 0){
-                        n = <RenderNaves starships={val.starships} personagem={key}/>;
+                        console.log('chamando componente RenderNaves');
+                        console.log(val.starships.length);
+                        n = <View>
+                            <Text>{val.starships.length}</Text>
+                            <Text>Pressione para ver naves.</Text>
+                            <Button title="Go to Naves" onPress={
+                                () => this.props.navigation.navigate('Naves', {starships: val.starships})
+                            }></Button>
+                        </View>;
+                        //n = <RenderNaves starships={val.starships} personagem={key}/>;
                     }
 
                         return (
                             <View key={key}>
                                 <Text style={styles.yellowTitle}>Personagem</Text>
                                 <Text style={styles.yellowTitle}>{val.name}</Text>
-                                <Text style={styles.blackSubTitle}>Naves</Text>
-                                <View>{n}</View>
+                                <Text style={styles.blackSubTitle}>Número de Naves</Text>
+                                {n}
                             </View>
                         );
                     }
