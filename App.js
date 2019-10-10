@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import {
+/*import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
@@ -22,17 +22,22 @@ import {
   Colors,
   DebugInstructions,
   ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+} from 'react-native/Libraries/NewAppScreen';*/
 
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
 import {HomeScreen} from './components/HomeScreen';
-import {ProfileScreen} from './components/ProfileScreen';
+//import {ProfileScreen} from './components/ProfileScreen';
+
+//import {RenderNaves} from './components/RenderNaves';
+import {NomeNave} from './components/NomeNave';
 
 const MainNavigator = createStackNavigator({
   Home: {screen: HomeScreen},
-  Profile: {screen: ProfileScreen},
+  //Profile: {screen: ProfileScreen},
+  //Naves: {screen: RenderNaves},
+  Nome: {screen: NomeNave},
 });
 
 const App = createAppContainer(MainNavigator);
