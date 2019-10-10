@@ -50,6 +50,7 @@ export class HomeScreen extends React.Component {
             );
         } else {
 
+
             /*const people = {
                 "count": 87,
                 "next": "https://swapi.co/api/people/?page=2",
@@ -329,35 +330,36 @@ export class HomeScreen extends React.Component {
                 ]
             };*/
 
-                let results = this.state.dataSource.map((val, key) => {
+
+            let results = this.state.dataSource.map((val, key) => {
 
                     let n = <Text>Personagem não possui nenhuma nave.</Text>;
 
-                    if(val.starships.length > 0){
-                        console.log('chamando componente RenderNaves');
+                    if (val.starships.length > 0) {
+                        console.log('HomeScreenjs chamando results starships length');
                         console.log(val.starships.length);
                         n = <View>
                             <Text>{val.starships.length}</Text>
-                            <Text>Pressione para ver naves.</Text>
-                            <Button title="Go to Naves" onPress={
-                                () => this.props.navigation.navigate('Naves', {starships: val.starships})
-                            }></Button>
+                            <Text>Pressione Ir até Naves para ver naves.</Text>
+                            <Button title="Ir até Naves" onPress={
+                                () => navigate('Nome', {url: val.starships})
+                            }/>
                         </View>;
                         //n = <RenderNaves starships={val.starships} personagem={key}/>;
                     }
 
-                        return (
-                            <View key={key}>
-                                <Text style={styles.yellowTitle}>Personagem</Text>
-                                <Text style={styles.yellowTitle}>{val.name}</Text>
-                                <Text style={styles.blackSubTitle}>Número de Naves</Text>
-                                {n}
-                            </View>
-                        );
-                    }
-                );
+                    return (
+                        <View key={key}>
+                            <Text style={styles.yellowTitle}>Personagem</Text>
+                            <Text style={styles.yellowTitle}>{val.name}</Text>
+                            <Text style={styles.blackSubTitle}>Número de Naves</Text>
+                            {n}
+                        </View>
+                    );
+                }
+            );
 
-                return (<ScrollView>{results}</ScrollView>);
+            return (<ScrollView>{results}</ScrollView>);
 
         }
     }
@@ -372,13 +374,13 @@ const styles = StyleSheet.create({
     red: {
         color: 'red',
     },
-    yellowTitle:{
-        color:'yellow',
+    yellowTitle: {
+        //color: 'yellow',
         fontWeight: 'bold',
         fontSize: 30,
     },
-    blackSubTitle:{
-        color:'black',
+    blackSubTitle: {
+        color: 'black',
         fontWeight: 'bold',
         fontSize: 15,
     }

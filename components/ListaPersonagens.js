@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
 export class ListaPersonagens extends React.Component {
     static navigationOptions = {
         title: 'Welcome',
     };
     render() {
-        const {navigate} = this.props.navigation;
+        const {navigate} = this.props.navigation;//function
         return (
             <Button
                 title="Go to Jane's profile"

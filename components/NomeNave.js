@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {YellowBox, Text, ScrollView, Button} from 'react-native';
 
 //import { createAppContainer } from 'react-navigation';
@@ -15,9 +15,7 @@ export class NomeNave extends React.Component {
         };
 
         console.log('constructor NomeNave');
-        console.log('array url naves');
-        console.log(this.props.urlNaves || this.props.urlNaves === undefined);
-
+        console.log(this.props);
     }
 
     static navigationOptions = {
@@ -26,30 +24,21 @@ export class NomeNave extends React.Component {
 
     componentDidMount() {
 
-        //let n = "https://swapi.co/api/starships/48";
+        //const url = "https://swapi.co/api/starships/13/";
 
-        if(this.props.urlNaves[0] === undefined){
-            //Alert.alert("empty array of starships");
-            console.log('starships array undefined :)');
-            //return ;
-        }else {
+        return fetch("https://swapi.co/api/starships/13/")
+            .then((response) => response.json())
+            .then((responseJson) => {
 
-            console.log('fetching starship 0');
-            console.log(this.props.urlNaves[0]);
+                this.setState({
+                    dataSource: responseJson.name,
+                    isLoading: false
+                })
 
-            return fetch(this.props.urlNaves[0])
-                .then((response) => response.json())
-                .then((responseJson) => {
+            }).catch((error) => {
+                console.log(error)
+            });
 
-                    this.setState({
-                        dataSource: responseJson.starships,
-                        isLoading: false
-                    })
-
-                }).catch((error) => {
-                    console.log(error)
-                });
-        }
     }
 
     render() {
@@ -364,28 +353,19 @@ export class NomeNave extends React.Component {
             ]
         };*/
 
-        YellowBox.ignoreWarnings(['Warning: ...']);
 
         if (this.state.isLoading) {
             return (
                 <Text>Carregando Naves Star Wars...</Text>
             );
         } else {
-            let {Nome} = this.dataSource.starships.name;
-
-            console.log('Nome');
-            console.log(Nome);
-
-            let vetor = this.props.starships;
-            let lista = vetor.map(vetor => <li>{vetor}</li>);//es6
 
             return (
                 <ScrollView>
-                    <div>{response.name}</div>
-                    <ul>{lista}</ul>
-                    <Button title="Go to Início" onPress={
-                        () => this.props.navigation.navigate('Home')
-                    }></Button>
+                    <Text>{this.state.dataSource}</Text>
+                    <Button title="Ir até Início" onPress={
+                        () => navigate('Home')
+                    }/>
                 </ScrollView>
             );
         }

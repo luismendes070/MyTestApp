@@ -12,7 +12,7 @@ export class RenderNaves extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log('constructor RenderNaves');
+        console.log('deletar constructor RenderNaves');
         console.log(this.props.starships);
 
     }
@@ -25,18 +25,18 @@ export class RenderNaves extends React.Component {
 
         YellowBox.ignoreWarnings(['Warning: ...']);
 
-        const {navigate} = this.props.navigation;
+        const {navigate} = this.props.navigation;//function
 
         let Naves;
 
-        if(this.props.starships !== undefined){
+        if(this.props.starships !== undefined && this.props.starships.length > 0){
             Naves = this.props.starships.map(
                 (val, key) => {
                         console.log('val url 1 personagem');
                         console.log(val);
                         return (
                             <View key={key}>
-                                {/*<NomeNave urlNaves={val}/>*/}
+                                <NomeNave urlNaves={val}/>
                             </View>
                         );
                 }
@@ -48,8 +48,8 @@ export class RenderNaves extends React.Component {
                 <Text>Lista de Naves do personagem </Text>
                 <View>{Naves}</View>
                 <Button title="Go to Nome" onPress={
-                    () => this.props.navigation.navigate('Nome', {props: this.props})
-                }></Button>
+                    () => navigate('Nome', {props: Naves})
+                }/>
             </ScrollView>
         );
     }
